@@ -39,15 +39,20 @@ namespace EllerAlg
                 Maze[i] = OneStr(CreateNewStr(Maze[i - 1]));
             }
 
-            for (int i = 0; i < Maze[0].Length - 1; i++)
+            /*for (int i = 0; i < Maze[0].Length - 1; i++)
             {
-                if (Maze.Last()[i].LotsOf != Maze.Last()[i + 1].LotsOf)
+                if (Maze.Last()[i].LotsOf == Maze.Last()[i + 1].LotsOf)
+                    Maze.Last()[i].Right = true;
+                else
                 {
                     Maze.Last()[i].Right = false;
-                    Maze.Last()[i + 1].LotsOf = Maze.Last()[i].LotsOf;
-                }
+                    Maze.Last()[i+1].LotsOf = Maze.Last()[i].LotsOf;
+                }    
+            }*/
 
-            }
+            for (int i = 0; i < Maze[0].Length - 1; i++)
+                ToLastStr(new Cell[] { Maze.Last()[i], Maze.Last()[i + 1] }, i);
+
             foreach (var c in Maze.Last())
             {
                 c.Bottom = true;
@@ -70,6 +75,16 @@ namespace EllerAlg
                 
             return Maze;
         }
+
+        private void ToLastStr(Cell[] input, int i)
+        {
+            if (input[0].LotsOf != input[1].LotsOf)
+            {
+                input[0].Right = false;
+                input[1].LotsOf = input[0].LotsOf;
+            }
+        }
+
         private Cell[] CreateNewStr(Cell[] toInput)
         {
             var count = toInput.Length;
@@ -78,79 +93,65 @@ namespace EllerAlg
             {
                 if (!toInput[i].Bottom)
                 {
-                    input[i] = new Cell(toInput[i].LotsOf)
+                    input[i] = new Cell(toInput[i].LotsOf);
+                    
+                }
+                else if(i < input.Length - 1)
+                {
+                    if (input.Length + i != toInput[i + 1].LotsOf && input.Length + i != toInput[Math.Max(0, i - 1)].LotsOf)
                     {
-                        Right = toInput[i].Right,
-                        Bottom = toInput[i].Bottom,
-                    };
+                        input[i] = new Cell(count + i);
+                    }
+                    else
+                    {
+                        count++;
+                        input[i] = new Cell(count + i);
+                    }
                 }
             }
+
+            //if (input[i].LotsOf == input[Math.Max(0, i - 1)].LotsOf && input[i].LotsOf != 0)
+                //input[Math.Max(0, i - 1)].Right = true;
+
+
+            if (input[input.Length - 1] == null)
+                input[input.Length-1] = new Cell(count + input.Length - 1);
+
             for (int i = 0; i < input.Length-1; i++)
             {
-                if (input.Length + i != toInput[i + 1].LotsOf)
-                {
-                    //count++;
-                    input[i] = new Cell(count + i);
-                    if (toInput[i].LotsOf == toInput[i + 1].LotsOf)
-                        input[i].Right = true;
-                }
-                else
-                {
-                    count++;
-                    input[i] = new Cell(count + i);
-                    if (toInput[i].LotsOf == toInput[i + 1].LotsOf)
-                        input[i].Right = true;
-
-                }
+                if (input[i].LotsOf == input[i + 1].LotsOf)
+                    input[i].Right = true;
+                
             }
-            /*for (int i = 0; i < input.Length-1; i++)
-            {
-                if (input[i].LotsOf == input[i + 1].LotsOf && input[i+1].Bottom)
-                    input[i].Bottom = true;
-            }*/
             
-            input[input.Length-1] = new Cell(count + input.Length - 1);
+
             return input;
         }
 
         private Cell[] OneStr(Cell[] input)
         {
 
-
-            foreach (var c in input)
-            {
-                c.Right = false;
-            }
-
             input.Last().Right = true;
+
+            //PrintWithNumbers(0, 1, new Cell[][] { input });
 
             for (int i = 0; i < input.Length-1; i++)  
             {
-                if (_rnd.Next(0, 10) > 5 || input[i].LotsOf == input[i + 1].LotsOf)               // 3.2
+                if (_rnd.Next(2) == 0 || input[i].LotsOf == input[i + 1].LotsOf)
                     input[i].Right = true;
-                else
+                else if (!input[i].Right)
                     input[i + 1].LotsOf = input[i].LotsOf;
             }
-            
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (input[i].Bottom)
-                {
-                    input[i].Bottom = false;
-                    if (i == 0)
-                        input[i].LotsOf = 0;
-                    else
-                        input[i].LotsOf = input[i - 1].LotsOf + 1;
-                }
-            }
+
             var check = false;
 
             for (int i = 0; i < input.Length; i++)
             {
-                if (_rnd.Next(0, 10) > 0)
+                if (_rnd.Next(2) == 0)
                 {
                     input[i].Bottom = true;
                 }
+                
             }
 
             for (int i = 0; i < input.Length; i++)
@@ -160,15 +161,17 @@ namespace EllerAlg
                 {
                     for (int j = 0; j < input.Length; j++)
                     {
-                        if (!input[j].Bottom && input[i].LotsOf == input[j].LotsOf)
-                            check = true;
+                        if (!input[j].Bottom && input[i].LotsOf == input[j].LotsOf && !input[j].Right)
+                                check = true;
                     }
                     if (!check)
                         input[i].Bottom = false;
                 }
+                if(check == true)
+
                 check = false;
             }
-
+            //PrintWithNumbers(0, 1, new Cell[][] { input });
             return input;
         }
 

@@ -10,8 +10,8 @@ namespace EllerAlg
     {
         public int X { get; }
         public int Y { get; }
-        public bool Right { get; set; }
-        public bool Bottom { get; set; }
+        public bool Right { get; set; } = false;
+        public bool Bottom { get; set; } = false;
         public int LotsOf { get; set; }
         public Cell(int x, int y)
         {
