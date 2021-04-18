@@ -26,7 +26,6 @@ namespace EllerAlg
             {
                 Maze.Last()[j] = new Cell();
             }
-            S
         }
 
         public void Generate()
