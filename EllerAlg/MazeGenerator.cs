@@ -9,7 +9,7 @@ namespace EllerAlg
     public class MazeGenerator
     {
         public int Width { get; }
-        public List<Cell[]> Maze { get; private set; }
+        public List<ECell[]> Maze { get; private set; }
 
         private Random _rnd;
 
@@ -19,12 +19,12 @@ namespace EllerAlg
 
             _rnd = new Random();
 
-            Maze = new List<Cell[]>();
+            Maze = new List<ECell[]>();
 
-            Maze.Add(new Cell[Width]);
+            Maze.Add(new ECell[Width]);
             for (int j = 0; j < Width; j++)
             {
-                Maze.Last()[j] = new Cell();
+                Maze.Last()[j] = new ECell();
             }
         }
 
@@ -48,13 +48,13 @@ namespace EllerAlg
             }
         }
         #region Private Methods
-        private Cell[] CreateOneRow(int i, int[] right, int[] bot)
+        private ECell[] CreateOneRow(int i, int[] right, int[] bot)
         {
-            var temp = new Cell[Width];
+            var temp = new ECell[Width];
 
             for (int c = 0; c < Width; c++)
             {
-                temp[c] = new Cell();
+                temp[c] = new ECell();
             }
 
             for (int j = 0; j < Width; j++)
@@ -88,7 +88,7 @@ namespace EllerAlg
             return temp;
         }
 
-        private void PrintWithOutNumbers(int start, int h, Cell[] maze)
+        private void PrintWithOutNumbers(int start, int h, ECell[] maze)
         {
             for (int i = start; i < h; i++)
             {

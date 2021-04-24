@@ -11,7 +11,7 @@ namespace EllerAlg
     {
         public int Width { get; }
         public int Height { get; private set; }
-        public Cell[][] Maze { get; private set; }
+        public ECell[][] Maze { get; private set; }
 
         private Random _rnd;
 
@@ -20,27 +20,27 @@ namespace EllerAlg
             Width = width;
             Height = height;
             _rnd = new Random();
-            Maze = new Cell[Height][];
+            Maze = new ECell[Height][];
             for (int i = 0; i < Height; i++)
             {
-                Maze[i] = new Cell[Width];
+                Maze[i] = new ECell[Width];
                 for (int j = 0; j < Width; j++)
                 {
-                    Maze[i][j] = new Cell();
+                    Maze[i][j] = new ECell();
                 }
             }
         }
 
-        public Cell[][] Generate()
+        public ECell[][] Generate()
         {
 
-            Maze = new Cell[Height][];
+            Maze = new ECell[Height][];
             for (int i = 0; i < Height; i++)
             {
-                Maze[i] = new Cell[Width];
+                Maze[i] = new ECell[Width];
                 for (int j = 0; j < Width; j++)
                 {
-                    Maze[i][j] = new Cell();
+                    Maze[i][j] = new ECell();
                 }
 
             }
@@ -118,7 +118,7 @@ namespace EllerAlg
             return Maze;
         }
 
-        public void PrintWithOutNumbers(int start, int h, Cell[][] maze)
+        public void PrintWithOutNumbers(int start, int h, ECell[][] maze)
         {
             for (int i = 0; i < maze[0].Length; i++)
             {
