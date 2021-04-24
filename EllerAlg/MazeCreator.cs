@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace EllerAlg
 {
@@ -66,7 +62,7 @@ namespace EllerAlg
                         bot[temp[j]] = bot[j + 1];
 
                         temp[j] = j + 1;
-                        
+
                         bot[j + 1] = j;
                     }
 
@@ -79,14 +75,14 @@ namespace EllerAlg
                         temp[j] = j;
 
                         bot[j] = j;
-                    } 
+                    }
                     else
                         Maze[i][j].Bottom = false;
                 }
 
                 for (int c = 0; c < temp.Length; c++)
                 {
-                    Console.Write(temp[c]+ "  ");
+                    Console.Write(temp[c] + "  ");
                 }
                 Console.WriteLine();
             }
@@ -113,7 +109,7 @@ namespace EllerAlg
 
                 bot[j] = j;
             }
-            if(Console.ReadKey().Key == ConsoleKey.W)
+            if (Console.ReadKey().Key == ConsoleKey.W)
                 PrintWithOutNumbers(0, Height, Maze);
             return Maze;
         }

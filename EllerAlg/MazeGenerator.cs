@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace EllerAlg
 {
@@ -40,7 +39,7 @@ namespace EllerAlg
             }
 
             var counter = 0;
-            for(; ; )
+            for (; ; )
             {
                 Maze.Add(CreateOneRow(counter, right, bot));
                 PrintWithOutNumbers(0, 1, Maze.Last());
