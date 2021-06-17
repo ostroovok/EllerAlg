@@ -7,7 +7,7 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
-            MazeGenerator maze = new MazeGenerator(30);
+            MazeGenerator maze = new MazeGenerator(10);
             maze.Generate();
         }
     }

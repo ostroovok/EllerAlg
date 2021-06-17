@@ -13,9 +13,23 @@ namespace EllerAlg
 
         private Random _rnd;
 
+        private int[] right;
+        private int[] bot;
+
         public MazeGenerator(int width)
         {
             Width = width;
+            rowC = width;
+
+            
+            right = new int[Width];
+            bot = new int[Width];
+
+            for (int i = 0; i < Width; i++)
+            {
+                right[i] = i;
+                bot[i] = i;
+            }
 
             _rnd = new Random();
 
@@ -27,22 +41,17 @@ namespace EllerAlg
                 Maze.Last()[j] = new ECell();
             }
         }
-
+        
         public void Generate()
         {
-
-            var right = new int[Width];
-            var bot = new int[Width];
             for (int i = 0; i < Width; i++)
             {
-                right[i] = i;
                 bot[i] = i;
             }
-
             var counter = 0;
             for(; ; )
             {
-                Maze.Add(CreateOneRow(counter, right, bot));
+                Maze.Add(SecCreator(ref right, bot));
                 PrintWithOutNumbers(0, 1, Maze.Last());
                 Thread.Sleep(1000);
             }
@@ -85,6 +94,41 @@ namespace EllerAlg
                 else
                     temp[j].Bottom = false;
             }
+            return temp;
+        }
+        public int rowC;
+        private ECell[] SecCreator(ref int[] right, int[] bot)
+        {
+            var temp = new ECell[Width];
+
+            for (int c = 0; c < Width; c++)
+            {
+                temp[c] = new ECell();
+            }
+
+            for (int i = 0; i < Width; i++)
+            {
+                if(i != Width - 1 && _rnd.NextDouble() > 0.5)
+                {
+                    right[i + 1] = right[i];
+                    temp[i].Right = false;
+                }
+                if(i + rowC != right[i] && _rnd.NextDouble() > 0.5)
+                {
+                    bot[i] = right[i];
+                    temp[i].Bottom = false;
+                }
+                else
+                {
+                    bot[i] = rowC;
+                }
+                rowC++;
+            }
+            for (int j = 0; j < right.Length; j++)
+            {
+                right[j] = bot[j];
+            }
+
             return temp;
         }
 
